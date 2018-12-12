@@ -6,6 +6,11 @@ declare -r GREEN='\e[92m'       # Green
 ######################
 
 # Check first arg
+function Help() {
+        echo "To create an A record and create a PTR record in reverse zone automatically, use the first synthax."
+        echo "Synthax 1: ./nayt.sh -r zone.ca Host_IP Hostname"
+        echo "The zone file name MUST BE the same as the domain name. The FQDN will be automatically set to HOSTNAME.ZONENAME. so don't use FQDN as hostname."
+}
 if [[ "$1" =~ '.' ]]; then ZONE="$1"; RECORD="$2"; HOST="$3"; BIND="$4"; MODE=1                                 # Don't update reverse zone.
 elif [[ "$1" == "-r" ]]; then ZONE="$2"; ZONE_REV="${ZONE}.rev"; RECORD='A'; HOST="$3"; BIND="$4"; MODE=2       # Update reverse zone.
 elif [[ "$1" =~ "-h" ]]; then Help
@@ -25,12 +30,6 @@ function Error() {
 }
 if ! [ -f $ZONE_PATH/$ZONE ]; then Error 1; fi
 if ! [ -f $ZONE_PATH/$ZONE_REV ] && [[ "$1" == "-r" ]]; then Error 2; fi
-function Help() {
-        echo "To create an A record and create a PTR record in reverse zone automatically, use the first synthax."
-        echo "Synthax 1: ./nayt.sh -r zone.ca Host_IP Hostname"
-        echo "The zone file name MUST BE the same as the domain name. The FQDN will be automatically set to HOSTNAME.ZONENAME. so don't use FQDN as hostname."
-
-}
 function VerifyIP() {
         IFS='.' inarr=(${1});
         appender=''
