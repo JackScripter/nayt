@@ -49,14 +49,14 @@ function ForwardReverse() {
         # Forwarding
         echo -e "${BIND}.${ZONE}.\tIN\tA\t$HOST" >> $ZONE_PATH/$ZONE && echo -e "Forwarding file\t[$GREEN OK$DEF ]" || echo -e "Forwarding file\t[$RED FAILED$DEF ]" # Create A record in forwarding file zone
         LINE=`grep -ni "; serial" $ZONE_PATH/$ZONE | cut -d':' -f1` # Line that contain the serial
-        SERIAL=`grep -ni "; serial" $ZONE_PATH/$ZONE | sed -r 's/([^0-9]*([0-9]*)){1}.*/\1/'` #0.2
+        SERIAL=`grep -i "; serial" $ZONE_PATH/$ZONE | sed -r 's/([^0-9]*([0-9]*)){1}.*/\1/'` #0.2
         NEWSERIAL=$(($SERIAL+1))
         sed -i "${LINE}s/$SERIAL/$NEWSERIAL/" $ZONE_PATH/$ZONE
         # Reverse
         hostIP=`echo $HOST | cut -d'.' -f4`
         echo -e "$hostIP\tIN\tPTR\t${BIND}.${ZONE}." >> $ZONE_PATH/$ZONE_REV && echo -e "Reverse file\t[$GREEN OK$DEF ]" || echo -e "Reverse file\t[$RED FAILED$DEF ]"       # Associate A record to a PTR in reverse zone.
         LINE=`grep -ni "; serial" $ZONE_PATH/$ZONE_REV | cut -d':' -f1` # Line that contain the serial
-        SERIAL=`grep -ni "; serial" $ZONE_PATH/$ZONE_REV | sed -r 's/([^0-9]*([0-9]*)){1}.*/\1/'` #0.2
+        SERIAL=`grep -i "; serial" $ZONE_PATH/$ZONE_REV | sed -r 's/([^0-9]*([0-9]*)){1}.*/\1/'` #0.2
         NEWSERIAL=$(($SERIAL+1))
         sed -i "${LINE}s/$SERIAL/$NEWSERIAL/" $ZONE_PATH/$ZONE_REV
 }
