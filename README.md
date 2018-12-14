@@ -23,6 +23,10 @@ This will create a MX record in file zone.com for hostname mail. The DNS entry w
 
 This will create an A record for host srv-ftp with IP 10.50.1.2 in file zone.com.
 
+**Example 4:** ./nayt.sh zone.com CNAME www zone.com
+
+This will create the following record in file zone.com: 'www  IN  CNAME zone.com.'.
+
 
 Bug report
 -
