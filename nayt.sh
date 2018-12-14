@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.3
+# v0.3.1
 ##### COLOR CODE #####
 declare -r DEF='\e[0m'          # Default
 declare -r RED='\e[31m'         # Red
@@ -52,7 +52,7 @@ function ForwardReverse() {
         IncrementSerial "$ZONE_PATH/$ZONE_REV"
 }
 function Forward() {
-        if [[ "$RECORD" == "CNAME" ]]; then echo -e "$BIND\tIN\tCNAME\t$HOST" >> $ZONE_PATH/$ZONE && IncrementSerial "$ZONE_PATH/$ZONE"
+        if [[ "$RECORD" == "CNAME" ]]; then echo -e "$BIND\tIN\tCNAME\t${HOST}." >> $ZONE_PATH/$ZONE && IncrementSerial "$ZONE_PATH/$ZONE" #0.3.1
         elif [[ "$RECORD" == "A" ]]; then echo -e "$BIND\tIN\tA\t$HOST" >> $ZONE_PATH/$ZONE && IncrementSerial "$ZONE_PATH/$ZONE"
         elif [[ "$RECORD" == "MX" ]]; then echo -e "\tIN\tMX\t10\t${BIND}.${ZONE}." >> $ZONE_PATH/$ZONE && IncrementSerial "$ZONE_PATH/$ZONE"
         else Error 3; fi
